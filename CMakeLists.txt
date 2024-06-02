@@ -5,8 +5,6 @@ set(PROJECT_VERSION 0.0.${PATCH_VERSION})
 
 project(ip_filter VERSION ${PROJECT_VERSION})
 
-option(WITH_GTEST "Whether to build Google test" ON)
-
 configure_file(version.h.in version.h)
 include_directories(${CMAKE_BINARY_DIR})
 include_directories(${PROJECT_SOURCE_DIR})
@@ -27,25 +25,6 @@ set_target_properties(ip_filter_cli ip_filter PROPERTIES
 target_link_libraries(ip_filter_cli PRIVATE
     ip_filter
 )
-
-if(WITH_GTEST)
-    find_package(GTest REQUIRED)
-    enable_testing()
-
-    add_executable(test_ip_filter_gtest tests/test_ip_filter_gtest.cpp)
-
-    set_target_properties(test_ip_filter_gtest PROPERTIES
-        CXX_STANDARD 17
-        CXX_STANDARD_REQUIRED ON
-    )
-
-    target_link_libraries(test_ip_filter_gtest
-	    GTest::gtest_main
-        ip_filter
-    )
-
-    gtest_discover_tests(test_ip_filter_gtest)
-endif()
 
 if (MSVC)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4")
