@@ -5,7 +5,6 @@
 
 int main(int, char const* []) {
 	try {
-
 		auto ip_pool{ input_ip() };
 
 		auto vect_string_to_int{ vector_string_to_int(ip_pool) };

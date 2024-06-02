@@ -1,4 +1,9 @@
+#include "version.hpp"
 #include "ip_filter.hpp"
+
+int version() {
+	return PROJECT_VERSION_PATCH;
+}
 
 std::vector<std::vector<std::string>> input_ip() {
 	std::vector<std::vector<std::string>> tmp_ip;
@@ -38,7 +43,7 @@ std::vector<int> to_int(const std::vector<std::string>& Container) {
 			out.push_back(tmp_value);
 		}
 		else {
-			throw std::logic_error("can't convert part of IP");
+			throw std::logic_error("can not convert IP component");
 		}
 	}
 

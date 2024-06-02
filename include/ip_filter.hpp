@@ -4,18 +4,20 @@
 #include <string>
 #include <string_view>
 #include <vector>
-#include <charconv>
+#include <charconv> //C++17
 #include <algorithm>
 
+int version();
+
+// Input IP:
 std::vector<std::vector<std::string>> input_ip();
 
+// String Tokenization:
 std::vector<std::string> split(const std::string& str, char d);
 
-std::vector<int> to_int(const std::vector<std::string>& ip);
-std::vector<std::vector<int>> vector_string_to_int(std::vector<std::vector<std::string>>& Container);
-
-template<typename Z>
-auto print_ip(const std::vector<Z>& Container) {
+// Print Functions:
+template<typename Q>
+auto print_ip(const std::vector<Q>& Container) {
 	for (auto ip = Container.cbegin(); ip != Container.cend(); ++ip) {
 		for (auto ip_part = ip->cbegin(); ip_part != ip->cend(); ++ip_part) {
 			if (ip_part != ip->cbegin()) {
@@ -27,18 +29,23 @@ auto print_ip(const std::vector<Z>& Container) {
 	}
 }
 
+// Convert String To Int:
+std::vector<int> to_int(const std::vector<std::string>& ip);
+std::vector<std::vector<int>> vector_string_to_int(std::vector<std::vector<std::string>>& Container);
 
-template<typename Z>
-auto reverse_lexicographically_sort(std::vector<Z>& Container) {
-	std::sort(Container.begin(), Container.end(), std::greater<Z>());
+// Reverse lexicographically sort
+template<typename Q>
+auto reverse_lexicographically_sort(std::vector<Q>& Container) {
+	std::sort(Container.begin(), Container.end(), std::greater<Q>());
 }
 
-template<typename Z, typename...Args>
-auto filter(const std::vector<Z>& Container, Args const& ... args) {
-	std::vector<Z> tmp_container;
-	Z tmp_vector{ {args...} };
+// Filter by bytes:
+template<typename Q, typename...Args>
+auto filter(const std::vector<Q>& Container, Args const& ... args) {
+	std::vector<Q> tmp_container;
+	Q tmp_vector{ {args...} };
 
-	if (tmp_vector.size() > 4) { throw std::logic_error("too many arguments"); }
+	if (tmp_vector.size() > 4) { throw std::logic_error("There are too many arguments!!!"); }
 	if (std::find_if(tmp_vector.cbegin(), tmp_vector.cend(), [](const int val) { return val < 0 || val > 255; }) != tmp_vector.cend()) { throw std::logic_error("Incorrect values by filter!!!"); }
 
 	std::copy_if(Container.cbegin(), Container.cend(), std::back_inserter(tmp_container),
@@ -56,9 +63,9 @@ auto filter(const std::vector<Z>& Container, Args const& ... args) {
 	return tmp_container;
 }
 
-template<typename Z>
-auto filter_any(const std::vector<Z>& Container, uint8_t byte) {
-	std::vector<Z> tmp_container;
+template<typename Q>
+auto filter_any(const std::vector<Q>& Container, uint8_t byte) {
+	std::vector<Q> tmp_container;
 
 	std::copy_if(Container.cbegin(), Container.cend(), std::back_inserter(tmp_container),
 		[byte](const auto& elem) { return std::find(elem.cbegin(), elem.cend(), byte) != elem.cend(); });
