@@ -1,4 +1,4 @@
-#include "version.hpp"
+#include "version.h"
 #include "ip_filter.hpp"
 
 int version() {
